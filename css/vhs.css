@@ -1,0 +1,151 @@
+/* VHS effects and animations */
+:root {
+    --scan-line-color: rgba(255, 255, 255, 0.15);
+    --noise-intensity: 0.3;
+    --screen-flicker: 1s;
+    --static-opacity: 0.08;
+}
+
+.vhs-effect {
+    position: relative;
+    overflow: hidden;
+    background: #000;
+    min-height: 100vh;
+}
+
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        var(--scan-line-color) 0px,
+        var(--scan-line-color) 1px,
+        transparent 2px,
+        transparent 4px
+    );
+    pointer-events: none;
+    z-index: 15;
+    animation: scanlines 8s linear infinite;
+}
+
+.noise {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 11;
+    opacity: var(--static-opacity);
+    animation: noise 0.1s steps(4) infinite;
+    background: transparent;
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: repeating-radial-gradient(
+            circle at 50% 50%,
+            rgba(255,255,255,0.1) 0%,
+            rgba(255,255,255,0.1) 1%,
+            transparent 2%,
+            transparent 100%
+        );
+        animation: noisePattern 0.5s steps(4) infinite;
+    }
+}
+
+/* Add strong static overlay during glitch */
+.static-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.1) 0%,
+        rgba(255,255,255,0.1) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    mix-blend-mode: overlay;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 12;
+}
+
+@keyframes noisePattern {
+    0% { transform: translate(0, 0) scale(1); }
+    25% { transform: translate(-10%, -10%) scale(1.1); }
+    50% { transform: translate(10%, 10%) scale(0.9); }
+    75% { transform: translate(-5%, 5%) scale(1.05); }
+    100% { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes noise {
+    0%, 100% { transform: translate(0, 0); }
+    10% { transform: translate(-1%, -1%); }
+    20% { transform: translate(1%, 1%); }
+    30% { transform: translate(-2%, -2%); }
+    40% { transform: translate(2%, 2%); }
+    50% { transform: translate(-1%, 1%); }
+    60% { transform: translate(1%, -1%); }
+    70% { transform: translate(2%, -2%); }
+    80% { transform: translate(-2%, 2%); }
+    90% { transform: translate(1%, -1%); }
+}
+
+@keyframes scanlines {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(100px); }
+}
+
+@keyframes flicker {
+    0% { opacity: 0.97; }
+    5% { opacity: 0.85; }
+    10% { opacity: 0.9; }
+    15% { opacity: 0.4; }
+    16% { opacity: 1; }
+    45% { opacity: 0.91; }
+    50% { opacity: 0.78; }
+    51% { opacity: 0.89; }
+    60% { opacity: 0.95; }
+    70% { opacity: 0.85; }
+    80% { opacity: 0.9; }
+    90% { opacity: 0.95; }
+    100% { opacity: 0.94; }
+}
+
+.content {
+    position: relative;
+    z-index: 5;
+    animation: flicker calc(var(--screen-flicker) * 4) infinite;
+    text-shadow: 0.1em 0.1em 0.05em rgba(0, 0, 0, 0.4);
+}
+
+/* Add color bleeding effect */
+.content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -2px;
+    width: calc(100% + 4px);
+    height: 100%;
+    background: inherit;
+    filter: blur(2px);
+    opacity: 0.3;
+    mix-blend-mode: screen;
+    animation: colorshift 6s infinite;
+}
+
+@keyframes colorshift {
+    0% { filter: blur(2px) hue-rotate(0deg); }
+    50% { filter: blur(2px) hue-rotate(360deg); }
+    100% { filter: blur(2px) hue-rotate(0deg); }
+} 

@@ -1,0 +1,260 @@
+.terminal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+.video-container {
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 2rem;
+    border: 2px solid rgba(255, 0, 72, 0.5);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(255, 0, 72, 0.2);
+}
+
+.video-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        rgba(255, 0, 72, 0.1),
+        transparent 3px
+    );
+    pointer-events: none;
+    z-index: 1;
+}
+
+.video-effects {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+    mix-blend-mode: screen;
+    background: 
+        linear-gradient(
+            rgba(255, 0, 72, 0.05) 50%, 
+            transparent 50%
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.1),
+            transparent 50%
+        );
+    background-size: 100% 4px, 3px 100%;
+    animation: shift 0.2s infinite;
+}
+
+#promo-video {
+    width: 100%;
+    display: block;
+    filter: saturate(1.2) contrast(1.1) brightness(1.1);
+    transform: scale(1.01);
+}
+
+@keyframes shift {
+    0% { transform: translateX(0) }
+    25% { transform: translateX(-1px) }
+    50% { transform: translateX(0) }
+    75% { transform: translateX(1px) }
+    100% { transform: translateX(0) }
+}
+
+.audio-player {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(255, 0, 72, 0.5);
+    padding: 1rem;
+    width: 300px;
+}
+
+.player-label {
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+    color: rgba(255, 0, 72, 1);
+}
+
+.styled-player {
+    display: none;
+}
+
+.player-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.play-button {
+    background: none;
+    border: 1px solid rgba(255, 0, 72, 0.5);
+    color: rgba(255, 0, 72, 1);
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.play-button:hover {
+    background: rgba(255, 0, 72, 0.2);
+}
+
+.progress-bar {
+    flex-grow: 1;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    position: relative;
+    cursor: pointer;
+}
+
+.progress {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: rgba(255, 0, 72, 0.5);
+    width: 0%;
+}
+
+.time-display {
+    font-size: 0.8rem;
+    color: rgba(255, 0, 72, 0.8);
+    font-family: monospace;
+}
+
+.terminal-interface {
+    width: 100%;
+    max-width: 800px;
+    height: 300px;
+    background: rgba(0, 0, 0, 0.9);
+    border: 2px solid rgba(255, 0, 72, 0.5);
+    margin: 2rem 0;
+    padding: 1rem;
+    font-family: 'Courier New', monospace;
+    position: relative;
+    overflow: hidden;
+}
+
+.terminal-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 0, 72, 0.5);
+}
+
+.terminal-title {
+    color: rgba(255, 0, 72, 1);
+}
+
+.terminal-status {
+    color: rgba(255, 0, 72, 0.7);
+    animation: blink 1s infinite;
+}
+
+.terminal-output {
+    height: 200px;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+    color: #00ff00;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.terminal-input-line {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.prompt {
+    color: rgba(255, 0, 72, 1);
+}
+
+#terminal-input {
+    background: transparent;
+    border: none;
+    color: #00ff00;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    width: 100%;
+    outline: none;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.terminal-output::-webkit-scrollbar {
+    width: 5px;
+}
+
+.terminal-output::-webkit-scrollbar-track {
+    background: rgba(255, 0, 72, 0.1);
+}
+
+.terminal-output::-webkit-scrollbar-thumb {
+    background: rgba(255, 0, 72, 0.5);
+}
+
+.blur {
+    filter: blur(10px);
+    pointer-events: none;
+}
+
+.password-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.password-container {
+    background: rgba(0, 0, 0, 0.9);
+    padding: 2rem;
+    border: 2px solid rgba(255, 0, 72, 0.5);
+}
+
+#protocol-input {
+    background: transparent;
+    border: 1px solid rgba(255, 0, 72, 0.5);
+    color: #00ff00;
+    padding: 0.5rem;
+    width: 100%;
+    margin: 1rem 0;
+    font-family: 'Courier New', monospace;
+    text-align: center;
+}
+
+#unblur-button {
+    background: transparent;
+    border: 1px solid rgba(255, 0, 72, 0.5);
+    color: rgba(255, 0, 72, 1);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-family: 'Courier New', monospace;
+    transition: all 0.3s ease;
+}
+
+#unblur-button:hover {
+    background: rgba(255, 0, 72, 0.2);
+} 

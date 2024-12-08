@@ -1,0 +1,89 @@
+/* Main styles */
+body {
+    background: #000;
+    color: #fff;
+    font-family: "VCR OSD Mono", monospace;
+    margin: 0;
+    line-height: 1.6;
+}
+
+.content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.logo-container {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.logo-text {
+    font-size: 5rem;
+    letter-spacing: 1rem;
+    margin: 0;
+    text-shadow: 
+        0.05em 0 0 rgba(255,0,0,0.75),
+        -0.025em -0.05em 0 rgba(0,255,0,0.75),
+        0.025em 0.05em 0 rgba(0,0,255,0.75);
+}
+
+.glitch-text {
+    font-size: 3rem;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    animation: glitch 3s infinite;
+}
+
+.tagline {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #ff0048;
+    margin-bottom: 4rem;
+}
+
+.menu-preview {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.menu-item {
+    max-width: 400px;
+    border: 2px solid #ff0048;
+    margin: 2rem 0;
+}
+
+.hidden-text {
+    display: none;
+    color: #ff0048;
+}
+
+.location-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.location {
+    text-align: center;
+    padding: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.secret-button {
+    opacity: 0.1;
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 0;
+}
+
+footer {
+    text-align: center;
+    margin-top: 4rem;
+    padding: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+} 

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VEIL - Indulge Responsibly</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/vhs.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <div class="vhs-effect">
+        <div class="scanlines"></div>
+        <div class="noise"></div>
+        <div class="content">
+            <header>
+                <div class="logo-container">
+                    <h1 class="glitch-text logo-text">VEIL</h1>
+                </div>
+            </header>
+
+            <main>
+                <section class="hero">
+                    <h2 class="glitch-text">INDULGE RESPONSIBLY</h2>
+                    <p class="tagline">The future of fast food is here.</p>
+                </section>
+
+                <section class="menu-preview">
+                    <h2>THIS WEEK'S SPECIALS</h2>
+                    <div class="menu-text">
+                        <h3>THE ENLIGHTENMENT BURGER</h3>
+                        <p class="price">$7.99</p>
+                        <p class="description">Experience true awakening with our signature creation.</p>
+                    </div>
+                    <!-- Hidden element that appears on highlight -->
+                    <p class="hidden-text">THEY'RE IN THE FOOD</p>
+                </section>
+
+                <!-- Hidden audio element -->
+                <audio id="hidden-message" class="hidden">
+                    <!-- Add reversed-warning.mp3 - Audio saying "The chips are in the food. They're controlling us. Find the truth at /terminal" -->
+                    <source src="assets/audio/reversed-warning.mp3" type="audio/mpeg">
+                </audio>
+
+                <section class="locations">
+                    <h2>FIND US</h2>
+                    <div class="location-grid">
+                        <!-- Each coordinate is part of the puzzle -->
+                        <div class="location">34°05'N 118°24'W</div>
+                        <div class="location">40°43'N 74°00'W</div>
+                        <div class="location">51°30'N 0°07'W</div>
+                    </div>
+                </section>
+            </main>
+
+            <footer>
+                <p>© 2024 VEIL CORPORATION</p>
+                <!-- Hidden button that plays the reversed audio -->
+                <button class="secret-button" aria-hidden="true">EMPLOYEE ACCESS</button>
+            </footer>
+        </div>
+    </div>
+    <script src="js/effects/vhs.js"></script>
+    <script src="js/effects/glitch.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

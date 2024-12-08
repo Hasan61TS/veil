@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE TRUTH</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/vhs.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .truth-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #truth-video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: saturate(1.2) contrast(1.1);
+        }
+
+        .video-effects {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            mix-blend-mode: screen;
+            background: 
+                linear-gradient(
+                    rgba(255, 0, 72, 0.05) 50%, 
+                    transparent 50%
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255, 255, 255, 0.1),
+                    transparent 50%
+                );
+            background-size: 100% 4px, 3px 100%;
+            animation: shift 0.2s infinite;
+        }
+
+        .custom-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 800px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border: 1px solid rgba(255, 0, 72, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 2;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .video-container:hover .custom-controls {
+            opacity: 1;
+        }
+
+        .play-button {
+            background: none;
+            border: 1px solid rgba(255, 0, 72, 0.5);
+            color: rgba(255, 0, 72, 1);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .play-button:hover {
+            background: rgba(255, 0, 72, 0.2);
+        }
+
+        .progress-container {
+            flex-grow: 1;
+            height: 20px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .progress {
+            height: 100%;
+            background: rgba(255, 0, 72, 0.5);
+            width: 0%;
+            position: relative;
+        }
+
+        .progress::after {
+            content: '';
+            position: absolute;
+            right: -5px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 0, 72, 1);
+            border-radius: 50%;
+            display: none;
+        }
+
+        .progress-container:hover .progress::after {
+            display: block;
+        }
+
+        .time-display {
+            color: rgba(255, 0, 72, 1);
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            min-width: 100px;
+            text-align: center;
+        }
+
+        @keyframes shift {
+            0% { transform: translateX(0) }
+            25% { transform: translateX(-1px) }
+            50% { transform: translateX(0) }
+            75% { transform: translateX(1px) }
+            100% { transform: translateX(0) }
+        }
+    </style>
+</head>
+<body>
+    <div class="vhs-effect">
+        <div class="scanlines"></div>
+        <div class="noise"></div>
+        <div class="truth-container">
+            <div class="video-container">
+                <video id="truth-video">
+                    <source src="./assets/videos/truth.mp4" type="video/mp4">
+                </video>
+                <div class="video-effects"></div>
+                <div class="custom-controls">
+                    <button class="play-button">▶</button>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress"></div>
+                        </div>
+                    </div>
+                    <div class="time-display">00:00 / 00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/effects/vhs.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const video = document.getElementById('truth-video');
+            const playButton = document.querySelector('.play-button');
+            const progress = document.querySelector('.progress');
+            const progressContainer = document.querySelector('.progress-container');
+            const timeDisplay = document.querySelector('.time-display');
+
+            // Play/Pause
+            playButton.addEventListener('click', () => {
+                if (video.paused) {
+                    video.play();
+                    playButton.textContent = '⏸';
+                } else {
+                    video.pause();
+                    playButton.textContent = '▶';
+                }
+            });
+
+            // Update progress
+            video.addEventListener('timeupdate', () => {
+                const percent = (video.currentTime / video.duration) * 100;
+                progress.style.width = percent + '%';
+                
+                const currentMinutes = Math.floor(video.currentTime / 60);
+                const currentSeconds = Math.floor(video.currentTime % 60);
+                const totalMinutes = Math.floor(video.duration / 60);
+                const totalSeconds = Math.floor(video.duration % 60);
+                
+                timeDisplay.textContent = `${String(currentMinutes).padStart(2, '0')}:${String(currentSeconds).padStart(2, '0')} / ${String(totalMinutes).padStart(2, '0')}:${String(totalSeconds).padStart(2, '0')}`;
+            });
+
+            // Click to seek
+            progressContainer.addEventListener('click', (e) => {
+                const rect = progressContainer.getBoundingClientRect();
+                const percent = (e.clientX - rect.left) / rect.width;
+                video.currentTime = percent * video.duration;
+            });
+
+            // Video ended
+            video.addEventListener('ended', () => {
+                playButton.textContent = '▶';
+            });
+
+            // Start video
+            video.play().catch(() => {
+                // Auto-play prevented
+                playButton.textContent = '▶';
+            });
+        });
+    </script>
+</body>
+</html> 
